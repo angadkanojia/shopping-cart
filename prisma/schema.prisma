@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model find_users {
+  id                                    Int                    @id @default(autoincrement()) @db.UnsignedInt
+  user_membership_id                    String?                @db.VarChar(15)
+  login                                 String                 @default("") @db.VarChar(50)
+  pass                                  String                 @default("") @db.VarChar(64)
+  password_salt                         String                 @default("") @db.VarChar(32)
+  password_hash                         String                 @default("") @db.VarChar(10)
+  cookie_salt                           String                 @default("") @db.VarChar(32)
+  user_email                            String                 @default("") @db.VarChar(255)
+  logged_last                           DateTime               @default(dbgenerated("('0000-00-00 00:00:00')")) @db.DateTime(0)
+  logged_ip                             String                 @default("") @db.VarChar(15)
+  logged_host                           String                 @default("") @db.VarChar(255)
+  created                               DateTime               @default(dbgenerated("('0000-00-00 00:00:00')")) @db.DateTime(0)
+  date_updated                          DateTime?              @db.DateTime(0)
+  timezone                              String                 @default("") @db.VarChar(50)
+  password_verify                       String                 @default("") @db.VarChar(255)
+  credit                                Decimal                @default(0.00) @db.Decimal(10, 2)
+  tax_exempt                            Int                    @default(0) @db.UnsignedTinyInt
+  moderate_disable                      Int                    @default(0) @db.UnsignedTinyInt
+  disable_overdue_notices               Int                    @default(0) @db.UnsignedTinyInt
+  user_first_name                       String                 @default("") @db.VarChar(100)
+  user_last_name                        String                 @default("") @db.VarChar(100)
+  date_of_birth                         DateTime               @db.Date
+  user_organization                     String                 @default("") @db.VarChar(255)
+  user_position                         String?                @db.VarChar(255)
+  user_address1                         String                 @default("") @db.VarChar(255)
+  user_address2                         String                 @default("") @db.VarChar(255)
+  location_id                           Int?
+  user_city                             String                 @default("") @db.VarChar(255)
+  user_state                            String                 @default("") @db.VarChar(255)
+  user_country                          String                 @default("") @db.VarChar(255)
+  user_zip                              String?                @default("") @db.VarChar(15)
+  user_phone                            String                 @default("") @db.VarChar(15)
+  work_phone                            String                 @db.VarChar(200)
+  user_fax                              String                 @default("") @db.VarChar(15)
+  linkedin_user_profile                 String?                @db.VarChar(255)
+  degree                                String?                @db.VarChar(255)
+  experiance                            String?                @db.VarChar(255)
+  current_event_id                      Int?                   @default(0)
+  default_nomination_category_id        Int?
+  user_comment                          String?                @db.Text
+  signature                             String                 @default("") @db.VarChar(255)
+  out_disable                           Int                    @default(0) @db.UnsignedTinyInt
+  terms_accepted                        Int                    @default(0) @db.UnsignedTinyInt
+  favorites_notify                      Int                    @default(0) @db.UnsignedTinyInt
+  sync                                  Int                    @default(0) @db.TinyInt
+  import_id                             Int                    @default(0) @db.UnsignedSmallInt
+  token                                 String                 @default("0") @db.VarChar(255)
+  bank_account_holder_name              String                 @db.VarChar(255)
+  bank_account_sort_code                String                 @db.VarChar(255)
+  bank_account_number                   String                 @db.VarChar(255)
+  bank_account_ifsc                     String                 @db.VarChar(255)
+  bank_name                             String                 @db.VarChar(255)
+  bank_address                          String                 @db.VarChar(255)
+  custom_5                              String                 @default("") @db.VarChar(255)
+  custom_6                              String                 @db.VarChar(10)
+  custom_7                              String                 @default("") @db.VarChar(255)
+  custom_8                              String                 @default("") @db.VarChar(6)
+  custom_9                              String                 @default("") @db.VarChar(255)
+  custom_10                             String                 @default("Not Verified") @db.VarChar(255)
+  custom_11                             String                 @default("") @db.VarChar(231)
+  custom_12                             String                 @default("") @db.VarChar(255)
+  primary_listing_id                    Int?                   @default(0)
+  custom_13                             String                 @db.VarChar(10)
+  com_email                             Int                    @default(1) @db.TinyInt
+  com_phone                             Int                    @default(1) @db.TinyInt
+  com_post                              Int                    @default(1) @db.TinyInt
+  custom_55                             String                 @db.VarChar(33)
+  custom_57                             String                 @default("0") @db.VarChar(255)
+  credit_balance                        Decimal                @db.Decimal(10, 2)
+  is_franchise_business                 Int                    @default(0) @db.TinyInt
+  is_regional_franchise                 Int                    @default(0) @db.TinyInt
+  is_zonal_franchise                    Int                    @default(0) @db.TinyInt
+  is_master_franchise                   Int                    @default(0) @db.TinyInt
+  under_franchise_user                  Int
+  under_regional_franchise              Int?                   @default(0)
+  under_zonal_franchise                 Int?                   @default(0)
+  under_master_franchise                Int?                   @default(0)
+  under_ambassador_id                   Int?
+  under_preffered_partner               String?                @db.TinyText
+  under_premium_business_partner        Int?                   @default(0) @db.TinyInt
+  under_marketing_partner               Int?                   @default(0) @db.TinyInt
+  under_advertising_partner             Int?                   @default(0) @db.TinyInt
+  under_sales_partner                   Int?                   @default(0) @db.TinyInt
+  under_business_associates             Int?                   @default(0) @db.TinyInt
+  under_business_partner                Int?                   @default(0) @db.TinyInt
+  under_business_owner                  Int                    @default(0) @db.TinyInt
+  allocation_date                       DateTime               @db.DateTime(0)
+  under_support_user                    Int
+  credits_shopping                      Int                    @default(0) @db.TinyInt
+  request_for_frenchise                 Int
+  franchise_request_updated_on          DateTime               @db.DateTime(0)
+  franchise_request_submitted           Int                    @default(0) @db.TinyInt
+  email_verified                        Int
+  email_verifed_code                    Int
+  franchise_allow_export                Int                    @default(0) @db.TinyInt
+  franchise_allow_export_listings       Int                    @default(0) @db.TinyInt
+  franchise_allow_export_regi_request   Int                    @default(0) @db.TinyInt
+  franchise_allow_export_products       Int                    @default(0) @db.TinyInt
+  profile_completeness                  Int                    @default(0)
+  is_unsubscribed                       Boolean?               @default(false)
+  is_franchise_manage_event             Boolean?               @default(false)
+  franchise_rate_id                     Int?                   @default(0)
+  unit_franchise_commission_rate_id     Decimal?               @db.Decimal(10, 2)
+  regional_franchise_commission_rate_id Decimal?               @db.Decimal(10, 2)
+  zonal_franchise_commission_rate_id    Decimal?               @db.Decimal(10, 2)
+  master_franchise_commission_rate_id   Decimal?               @db.Decimal(10, 2)
+  profession_type                       String?                @db.VarChar(255)
+  profile_description                   String?                @db.Text
+  user_role                             String?                @db.VarChar(255)
+  default_nomination_text               String?                @db.VarChar(255)
+  flag_src                              Boolean?               @default(false)
+  is_child_user_account                 Boolean?               @default(false)
+  last_activity_time                    DateTime?              @db.DateTime(0)
+  is_connect_allowed                    Int?                   @default(0) @db.TinyInt
+  is_schedule_stats                     Boolean?               @default(false)
+  disc_profile                          String?                @db.Text
+  created_on                            DateTime?              @default(now()) @db.DateTime(0)
+  updated_on                            DateTime?              @db.DateTime(0)
+  registered_event_id                   Int?
+  affiliate_user_id                     Int?
+  is_affiliate                          Int?
+  affiliate_comission_percent           Decimal?               @db.Decimal(10, 2)
+  affiliate_display_name                String?                @db.VarChar(255)
+  custom_1202                           String                 @db.VarChar(10)
+  custom_1203                           String                 @db.VarChar(10)
+  custom_1204                           String                 @db.VarChar(10)
+  franchise_created_on                  DateTime?              @db.DateTime(0)
+  is_auto_generate_user                 Boolean?               @default(false)
+  is_password_changed                   Boolean?               @default(false)
+  domain                                Int?
+  is_advertise                          Int?                   @default(0) @db.TinyInt
+  request_for_territory_manager         Boolean?
+  is_sng_member                         Int?                   @default(0) @db.TinyInt
+  sng_location                          String?                @db.VarChar(255)
+  is_bcl_member                         Boolean?
+  enable_eventbrite                     Boolean?
+  excelexpo_user                        Boolean?               @default(false)
+  user_status                           find_users_user_status @default(active)
+  is_synced_to_crm                      Boolean?               @default(false)
+  domain_id                             Int
+  is_email_sent                         Int
+  is_invoice_sent                       Int
+  register_on_doctor_portal             Int
+
+  @@index([created], map: "created")
+  @@index([user_status], map: "idx_fu_user_status")
+  @@index([import_id], map: "import_id")
+  @@index([location_id], map: "location_id")
+  @@index([logged_ip], map: "logged_ip")
+  @@index([login], map: "login_idx")
+  @@index([user_first_name, user_last_name], map: "name")
+  @@index([user_phone], map: "phone")
+  @@index([user_first_name, user_last_name, user_organization], map: "search")
+  @@index([user_email], map: "user_email")
+}
+
+enum find_users_user_status {
+  active
+  deactive
+  missing
+  pending
+  suspended
+}
