@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useState, ChangeEvent } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Input } from "@/common/components";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Input } from "../(common)/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 type FormData = {
   username: string;
@@ -11,17 +11,21 @@ type FormData = {
 };
 
 const checkUser = async (formData: FormData) => {
-  //const response = await fetch("api/user-details"); //response comes form routes.ts
-  //const { result } = await response.json();
-  // return result;
-
   try {
-    const response = await fetch("/api/user-details");
+    const response = await fetch("/api/user-details", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    const { result } = await response.json();
-    return result;
+
+    return await response.json();
+    // return data;
   } catch (error) {
     console.error("Failed to fetch user details:", error);
     return null;
@@ -49,7 +53,7 @@ const Login = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     const data = await checkUser(formData);
-    // console.log(data?.message);
+    console.log(data);
     // const { username, password } = formData;
 
     // const storedUsername = "asdf";

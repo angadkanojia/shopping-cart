@@ -1,16 +1,30 @@
-import { NextResponse } from 'next/server'
-import { prisma } from "../db";
+
+import { NextResponse } from 'next/server';
+import { prisma } from '../db'; 
 
 
-export async function REQUEST() {
-  
+export async function POST(request: Request) {
   try {
-    return await prisma.find_users.findFirst({});
-      
+    const { username, password } = await request.json();
+
+    console.log(username,password)
+    if (!username || !password) {
+      return NextResponse.json({ message: 'Username and password are required.' }, { status: 400 });
+    }
+
+    
+    const user = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    
+    if (user && password=== user.password) {
+      return NextResponse.json({ message: 'Login successful!' });
+    } else {
+      return NextResponse.json({ message: 'Invalid username or password.' }, { status: 401 });
+    }
   } catch (error: any) {
-    throw new Error(`Failed to delete data from database: ${error.message}`);
+    console.error('Failed to login:', error);
+    return NextResponse.json({ error: 'Failed to login' }, { status: 500 });
   }
 }
-
-
-
