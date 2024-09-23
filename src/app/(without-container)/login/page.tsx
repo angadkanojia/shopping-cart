@@ -52,8 +52,10 @@ const Login = () => {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    //setLoading(true);
     const data = await checkUser(formData);
-    console.log(data);
+    //setLoading(false);
+    //console.log(data);
     // const { username, password } = formData;
 
     // const storedUsername = "asdf";
@@ -64,6 +66,14 @@ const Login = () => {
     // } else {
     //   setMessage("Invalid username or password.");
     // }
+
+    if (data && data.message === "Login successful!") {
+      sessionStorage.setItem("token", data.token);
+      setMessage(data.message); // Set message based on the API response
+      window.location.href = "/dashboard";
+    } else {
+      setMessage(data?.message || "Login Failed..."); // Default error message
+    }
   };
 
   return (
