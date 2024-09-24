@@ -7,8 +7,8 @@ import "../globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Findusonweb Admin",
-  description: "Findusonweb Admin",
+  title: "Shopping cart",
+  description: "Shopping cart",
 };
 
 export default function RootLayout({
@@ -21,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <MainConatiner>{children}</MainConatiner>
+        {/* footer */}
       </body>
     </html>
   );
